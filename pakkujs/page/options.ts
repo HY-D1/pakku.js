@@ -366,6 +366,7 @@ function loadconfig() {
     id('mark-threshold').value = config.MARK_THRESHOLD;
     id('danmu-subscript').checked = config.DANMU_SUBSCRIPT;
     id('enlarge').checked = config.ENLARGE;
+    set_select_value(id('enlarge-percent'), config.ENLARGE_PERCENT, '', '%');
     set_select_value(id('shrink-threshold'), config.SHRINK_THRESHOLD, '>', '');
     set_select_value(id('drop-threshold'), config.DROP_THRESHOLD, '>', '');
     id('mode-elevation').checked = config.MODE_ELEVATION;
@@ -391,6 +392,7 @@ function loadconfig() {
     // opacity stuff
     id('mark-threshold-panel').style.opacity = '' + (config.DANMU_MARK ? 1 : .3);
     id('danmu-subscript-panel').style.opacity = '' + (config.DANMU_MARK ? 1 : .3);
+    id('enlarge-percent-panel').style.opacity = '' + (config.ENLARGE ? 1 : .3);
     id('tooltip-keybinding-panel').style.opacity = '' + (config.TOOLTIP ? 1 : .3);
 
     // FORCELIST
@@ -584,6 +586,7 @@ function update(this: HTMLInputElement) {
     config.MARK_THRESHOLD = safe_int(id('mark-threshold').value, 1, null, DEFAULT_CONFIG.MARK_THRESHOLD);
     config.DANMU_SUBSCRIPT = id('danmu-subscript').checked;
     config.ENLARGE = id('enlarge').checked;
+    config.ENLARGE_PERCENT = safe_int(id('enlarge-percent').value, 0, 300, DEFAULT_CONFIG.ENLARGE_PERCENT);
     config.SHRINK_THRESHOLD = safe_int(id('shrink-threshold').value, 0, null, DEFAULT_CONFIG.SHRINK_THRESHOLD);
     config.DROP_THRESHOLD = safe_int(id('drop-threshold').value, 0, null, DEFAULT_CONFIG.DROP_THRESHOLD);
     config.MODE_ELEVATION = id('mode-elevation').checked;
@@ -623,7 +626,7 @@ for(let elem of [
     // 例外设置
     'forcelist-continue-on-match', 'forcelist-apply-singular', 'cross-mode', 'ignore-type7', 'ignore-type4', 'ignore-pool1',
     // 显示设置
-    'mark-threshold', 'danmu-mark', 'danmu-subscript', 'enlarge', 'shrink-threshold', 'drop-threshold', 'mode-elevation', 'representative-percent',
+    'mark-threshold', 'danmu-mark', 'danmu-subscript', 'enlarge', 'enlarge-percent', 'shrink-threshold', 'drop-threshold', 'mode-elevation', 'representative-percent',
     // 播放器增强
     'tooltip', 'tooltip-keybinding', 'auto-disable-danmu', 'auto-danmu-list', 'fluctlight',
     // 实验室

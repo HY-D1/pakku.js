@@ -10,8 +10,10 @@ import {
 import {Queue} from "./queue";
 
 const MATH_LOG5 = Math.log(5);
-function calc_enlarge_rate(count: int): number {
-    return count<=5 ? 1 : (Math.log(count) / MATH_LOG5);
+function calc_enlarge_rate(count: int, percent: number): number {
+    const original_rate = count<=5 ? 1 : (Math.log(count) / MATH_LOG5);
+    const strength = Math.max(0, Math.min(percent, 300)) / 100;
+    return 1 + (original_rate - 1) * strength;
 }
 
 export const DISPVAL_TIME_THRESHOLD = 5000;
@@ -235,7 +237,7 @@ export function post_combine(
             rep_dm.extra.proto_likecount = tot_likecount;
 
         if(config.ENLARGE) {
-            let enlarge_rate = calc_enlarge_rate(c.peers.length);
+            let enlarge_rate = calc_enlarge_rate(c.peers.length, config.ENLARGE_PERCENT);
             rep_dm.fontsize = Math.ceil(rep_dm.fontsize * enlarge_rate);
             if(enlarge_rate>1.001) {
                 c.desc.push(`已放大 ${enlarge_rate.toFixed(2)} 倍：合并数量为 ${c.peers.length}`);
